@@ -1,6 +1,6 @@
 name: DiscordMCBridge
 main: io.ximf.DiscordMCBridge.Main
-version: 1.2.0
+version: 1.3.0
 website: http://www.ximf.io
 author: Ximf
 description:  Minecraft to Discord Bridge
