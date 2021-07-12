@@ -3,6 +3,7 @@ package io.ximf.DiscordMCBridge;
 import net.dv8tion.jda.api.AccountType;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.entities.TextChannel;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -30,7 +31,7 @@ public class Main extends JavaPlugin {
         } catch (LoginException e) {
             e.printStackTrace();
         }
-        discordListener = new DiscordListener();
+        discordListener = new DiscordListener(jda);
         jda.addEventListener(discordListener);
         getServer().getPluginManager().registerEvents(new MainListener(this, jda), this);
     }
@@ -47,6 +48,5 @@ public class Main extends JavaPlugin {
     public static int sendMessage(String message) {
         return Bukkit.getServer().broadcastMessage(message);
     }
-
 
 }

@@ -31,4 +31,9 @@ public class Config {
         FileConfiguration config = this.getConfigYaml();
         return config.getString("minecraft_discord_announce_name", "");
     }
+
+    public boolean getSelfWhitelist() {
+        FileConfiguration config = this.getConfigYaml();
+        return config.getBoolean("allow_self_whitelist", true);
+    }
 }
