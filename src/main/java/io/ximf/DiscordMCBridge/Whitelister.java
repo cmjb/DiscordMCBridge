@@ -33,15 +33,10 @@ public class Whitelister {
         String inputLine;
 
         while((inputLine = jsonIn.readLine()) != null) {
-            //JSONArray jsonArr = (JSONArray) parser.parse(inputLine);
             JSONObject player = (JSONObject) parser.parse(inputLine);
             String playerUUID = (String) player.get("id");
 
             return UUID_Pattern.matcher(playerUUID.replace("-", "")).replaceAll("$1-$2-$3-$4-$5");
-//            for (Object jsonObj : jsonArr) {
-//                JSONObject player = (JSONObject) jsonObj;
-//                return UUID.fromString((String) player.get("id"));
-//            }
         }
 
         throw new Exception("Can't find user.");
