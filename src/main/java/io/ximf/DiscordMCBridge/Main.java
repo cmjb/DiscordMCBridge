@@ -1,19 +1,11 @@
 package io.ximf.DiscordMCBridge;
 
-import net.dv8tion.jda.api.AccountType;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
-import net.dv8tion.jda.api.entities.TextChannel;
 import org.bukkit.Bukkit;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import javax.security.auth.login.LoginException;
-import java.io.File;
-import java.util.Arrays;
-import java.util.List;
 import java.util.logging.Logger;
 
 public class Main extends JavaPlugin {
@@ -45,8 +37,8 @@ public class Main extends JavaPlugin {
         getServer().getPluginManager().disablePlugin(this);
     }
 
-    public static int sendMessage(String message) {
-        return Bukkit.getServer().broadcastMessage(message);
+    public static void sendMessage(String message) {
+        Bukkit.getServer().broadcastMessage(message);
     }
 
 }

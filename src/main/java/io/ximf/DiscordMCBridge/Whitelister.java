@@ -4,21 +4,14 @@ import org.bukkit.Bukkit;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.ParseException;
 
 import java.io.*;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.List;
-import java.util.UUID;
 import java.util.regex.Pattern;
 
 public class Whitelister {
 
-    private final String playerNameRegex = "/^\\w{3,16}$/i";
     private final Pattern UUID_Pattern = Pattern.compile("(\\w{8})(\\w{4})(\\w{4})(\\w{4})(\\w{12})");
 
     public Whitelister() {
@@ -42,7 +35,8 @@ public class Whitelister {
         throw new Exception("Can't find user.");
     }
 
-    public boolean whitelistPlayer(String playerName) throws Exception {
+    public void whitelistPlayer(String playerName) throws Exception {
+        String playerNameRegex = "/^\\w{3,16}$/i";
         String playerNameFormatted = playerName.replaceAll(playerNameRegex, "");
         String playerUUID = this.getPlayerUUID(playerNameFormatted);
 
@@ -54,7 +48,7 @@ public class Whitelister {
             JSONObject whitelistPerson = (JSONObject) whitelistObject;
             String name = (String) whitelistPerson.get("name");
             if (name.equals(playerNameFormatted)) {
-                return false;
+                return;
             }
         }
 
@@ -71,6 +65,5 @@ public class Whitelister {
         file.close();
 
         Bukkit.reloadWhitelist();
-        return true;
     }
 }

@@ -3,6 +3,7 @@ package io.ximf.DiscordMCBridge;
 import net.dv8tion.jda.api.AccountType;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.TextChannel;
@@ -17,11 +18,6 @@ public class DiscordListener extends ListenerAdapter {
 
     private static final String token = "";
     private JDA jda = null;
-    @SuppressWarnings("unused")
-    public static String getToken()
-    {
-        return token;
-    }
 
     public DiscordListener(JDA jda) {
         this.jda = jda;
@@ -33,22 +29,30 @@ public class DiscordListener extends ListenerAdapter {
         MessageChannel channel = event.getChannel();
         Message message = event.getMessage();
         String content = message.getContentStripped();
-        String name = event.getMember().getEffectiveName();
+        try {
+            Member eventMember = event.getMember();
+            assert eventMember != null;
+            String name = eventMember.getEffectiveName();
 
-        if(channel.getIdLong() == config.getDiscordChannel() && name != null && name.equals(config.getDiscordBotName()) != true)
-        {
-            if(content.startsWith("!whitelist") && config.getSelfWhitelist()) {
-                TextChannel textchannel = jda.getTextChannelById(config.getDiscordChannel());
-                Whitelister whitelister = new Whitelister();
-                try {
-                    whitelister.whitelistPlayer(content.split(" ")[1]);
-                    textchannel.sendMessage("Adding " + content.split(" ")[1]).queue();
-                } catch (Exception exception) {
-                    textchannel.sendMessage("Can't add due to an exception: " + exception.getMessage()).queue();
+            if(channel.getIdLong() == config.getDiscordChannel() && !name.equals(config.getDiscordBotName()))
+            {
+                if(content.startsWith("!whitelist") && config.getSelfWhitelist()) {
+                    TextChannel textchannel = jda.getTextChannelById(config.getDiscordChannel());
+                    Whitelister whitelister = new Whitelister();
+                    try {
+                        whitelister.whitelistPlayer(content.split(" ")[1]);
+                        assert textchannel != null;
+                        textchannel.sendMessage("Adding " + content.split(" ")[1]).queue();
+                    } catch (Exception exception) {
+                        assert textchannel != null;
+                        textchannel.sendMessage("Can't add due to an exception: " + exception.getMessage()).queue();
+                    }
+                } else {
+                    Main.sendMessage("["+ config.getMinecraftDiscordAnnounceName() +"] " + name + ": " + content);
                 }
-            } else {
-                Main.sendMessage("["+ config.getMinecraftDiscordAnnounceName() +"] " + name + ": " + content);
             }
+        } catch (NullPointerException ex) {
+            ex.printStackTrace();
         }
     }
 

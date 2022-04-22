@@ -34,17 +34,21 @@ public final class MainListener implements Listener {
 
     @EventHandler
     public void PlayerAdvancementDoneEvent(PlayerAdvancementDoneEvent event) {
-        Player player = (Player) event.getPlayer();
         Config config = new Config();
-        String playerName = player.getDisplayName();
-        Advancement advancement = event.getAdvancement();
-        String advancementName = advancement.getClass().getSimpleName().replaceAll("_", "\\s+").toLowerCase();
+        if(config.getAdvancementAnnouncementIsEnabled()) {
+            Player player = (Player) event.getPlayer();
 
-        String message = "**" + playerName + "** " + " achieved the advancement **" + advancementName + "**!";
+            String playerName = player.getDisplayName();
+            Advancement advancement = event.getAdvancement();
+            String advancementName = advancement.getClass().getSimpleName().replaceAll("_", "\\s+").toLowerCase();
 
-        TextChannel textchannel = jda.getTextChannelById(config.getDiscordChannel());
+            String message = "**" + playerName + "** " + " achieved the advancement **" + advancementName + "**!";
 
-        textchannel.sendMessage("**["+ config.getMinecraftDiscordAnnounceName() +"]**: " + message).queue();
+            TextChannel textchannel = jda.getTextChannelById(config.getDiscordChannel());
+
+            assert textchannel != null;
+            textchannel.sendMessage("**[" + config.getMinecraftDiscordAnnounceName() + "]**: " + message).queue();
+        }
 
     }
 
@@ -57,6 +61,7 @@ public final class MainListener implements Listener {
 
         TextChannel textchannel = jda.getTextChannelById(config.getDiscordChannel());
 
+        assert textchannel != null;
         textchannel.sendMessage("**["+ config.getMinecraftDiscordAnnounceName() +"]**: " + message).queue();
 
     }
@@ -70,6 +75,7 @@ public final class MainListener implements Listener {
 
         TextChannel textchannel = jda.getTextChannelById(config.getDiscordChannel());
 
+        assert textchannel != null;
         textchannel.sendMessage("**["+ config.getMinecraftDiscordAnnounceName() +"]**: " + message).queue();
 
     }
@@ -84,6 +90,7 @@ public final class MainListener implements Listener {
 
         String message = playerName + ": " + content;
 
+        assert textchannel != null;
         textchannel.sendMessage("["+ config.getMinecraftDiscordAnnounceName() +"]: " + message).queue();
 
     }

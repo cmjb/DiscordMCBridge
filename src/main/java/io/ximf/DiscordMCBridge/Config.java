@@ -8,8 +8,7 @@ import java.io.File;
 public class Config {
     private FileConfiguration getConfigYaml() {
         File file = new File("plugins/DiscordMCBridge/settings.yml");
-        FileConfiguration config = YamlConfiguration.loadConfiguration(file);
-        return config;
+        return YamlConfiguration.loadConfiguration(file);
     }
 
     public Long getDiscordChannel() {
@@ -35,5 +34,10 @@ public class Config {
     public boolean getSelfWhitelist() {
         FileConfiguration config = this.getConfigYaml();
         return config.getBoolean("allow_self_whitelist", true);
+    }
+
+    public boolean getAdvancementAnnouncementIsEnabled() {
+        FileConfiguration config = this.getConfigYaml();
+        return config.getBoolean("announce_advancement", false);
     }
 }
