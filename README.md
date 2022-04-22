@@ -6,10 +6,14 @@ Compatible with Spigot.
 
 Latest version : `1.3.1`
 
+Download
+---
+Download the latest version [here.](https://github.com/ximfy/DiscordMCBridge/releases/tag/1.3.1)
+
 Usage
 ---
 0. Setup a bot via Discord Developers, create it as a bot and add it to your server of choice. Copy the token and channel id.
-1. Insert the jar file from Releases into your `./plugins/` directory in your Bukkit or Spigot server.
+1. Insert the jar file from [Releases](https://github.com/ximfy/DiscordMCBridge/releases/tag/1.3.1) into your `./plugins/` directory in your Bukkit or Spigot server.
 2. Add a `./plugins/DiscordMCBridge/` folder and inside it create a file called `settings.yml` with the following inside:
 ```yml
 discord_channel: <channel without quotes>
